@@ -1,9 +1,9 @@
 === User Profile Picture ===
 Contributors: cozmoslabs, ronalfy, Alaadiaa
-Tags: users, user profile, gravatar, avatar, blocks, block
-Requires at least: 3.5
-Tested up to: 6.6
-Stable tag: 2.6.3
+Tags: users, user profile, gravatar, avatar, blocks
+Requires at least: 5.0
+Tested up to: 7.0
+Stable tag: 2.6.4
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -113,6 +113,13 @@ Yes, but you'll have to set a new profile image per site.  This is currently a l
 4. Gutenberg profile front-end
 
 == Changelog ==
+
+= 2.6.4 =
+* Released 2026-07-07
+* Security fix: hardened the AJAX and REST endpoints that set, retrieve, and remove profile pictures against Insecure Direct Object Reference (IDOR) access. Requests are now validated so a user can only act on their own profile picture (unless they have the capability to edit other users), and the referenced post must be the user's own profile-picture post.
+* Security hardening: validated that the referenced media is a real attachment before it is assigned, and required an authenticated capability check on the profile-image REST route.
+* Security hardening: added a capability check and nonce verification to the "migrate to Profile Builder" admin-notice dismissal.
+* Tested up to WordPress 7.0.
 
 = 2.6.3 =
 * Released 2024-07-18

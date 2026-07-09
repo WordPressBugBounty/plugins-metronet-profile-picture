@@ -1,5 +1,8 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
 
 if( !class_exists('PB_Handle_Transition') ){
     class PB_Handle_Transition{
@@ -66,7 +69,7 @@ if( !class_exists('PB_Handle_Transition') ){
                                 ?>
                                 <div class="upp-transition-notice upp-notice notice notice-success is-dismissible">
                                     <p>
-                                        <?php echo apply_filters( 'upp_plugin_activation_success_message', esc_html__('Plugin activated.', 'profile-builder') ); ?>
+                                        <?php echo esc_html( apply_filters( 'upp_plugin_activation_success_message', esc_html__('Plugin activated.', 'metronet-profile-picture') ) ); ?>
                                     </p>
                                 </div>
                                 <?php
@@ -74,7 +77,7 @@ if( !class_exists('PB_Handle_Transition') ){
                                ?>
                                 <div class="upp-transition-notice upp-notice notice notice-error is-dismissible">
                                     <p>
-                                        <?php echo wp_kses( sprintf( apply_filters( 'upp_plugin_activation_fail_message', __('Could not install. Try again from the <a href="%s" >Plugins Dashboard.</a>', 'profile-builder') ), apply_filters( 'upp_plugin_activation_fail_link', admin_url('plugins.php') ) ), array('a' => array( 'href' => array() ) ) ); ?>
+                                        <?php /* translators: %s: URL of the Plugins dashboard. */ echo wp_kses( sprintf( apply_filters( 'upp_plugin_activation_fail_message', __('Could not install. Try again from the <a href="%s" >Plugins Dashboard.</a>', 'metronet-profile-picture') ), esc_url( apply_filters( 'upp_plugin_activation_fail_link', admin_url('plugins.php') ) ) ), array('a' => array( 'href' => array() ) ) ); ?>
                                     </p>
                                 </div>
                                 <?php
@@ -89,16 +92,16 @@ if( !class_exists('PB_Handle_Transition') ){
                                         </p>
                                         <p style="margin-top: 16px; font-size: 15px;">
                                             <?php
-                                            printf( apply_filters( 'upp_transition_notice_part_1', esc_html__( 'The User Profile Picture functionality has been migrated into Profile Builder as an add-on. Please install and activate the Profile Builder plugin to use this new add-on.', 'profile-builder' ) ) );
+                                            echo esc_html( apply_filters( 'upp_transition_notice_part_1', esc_html__( 'The User Profile Picture functionality has been migrated into Profile Builder as an add-on. Please install and activate the Profile Builder plugin to use this new add-on.', 'metronet-profile-picture' ) ) );
                                             ?>
                                         </p>
                                         <p style="margin-top: 16px; font-size: 15px;">
                                             <?php
-                                            printf( apply_filters( 'upp_transition_notice_part_2', esc_html__( 'This plugin will continue to function as it is now, but it will not receive further updates. You can read more about this transition in', 'profile-builder' ) ) );
+                                            echo esc_html( apply_filters( 'upp_transition_notice_part_2', esc_html__( 'This plugin will continue to function as it is now, but it will not receive further updates. You can read more about this transition in', 'metronet-profile-picture' ) ) );
                                             echo ' ';
-                                            echo '<a href="' . apply_filters( 'upp_transition_notice_link_target', "https://www.cozmoslabs.com/docs/profile-builder/add-ons/user-profile-picture/" ) . '" target="_blank" rel="noopener noreferrer">' . apply_filters( 'upp_transition_notice_link_text', esc_html__( 'this', 'profile-builder' ) ) . '</a>';
+                                            echo '<a href="' . esc_url( apply_filters( 'upp_transition_notice_link_target', "https://www.cozmoslabs.com/docs/profile-builder/add-ons/user-profile-picture/" ) ) . '" target="_blank" rel="noopener noreferrer">' . esc_html( apply_filters( 'upp_transition_notice_link_text', esc_html__( 'this', 'metronet-profile-picture' ) ) ) . '</a>';
                                             echo ' ';
-                                            wp_kses( printf( apply_filters( 'upp_transition_notice_part_3', esc_html__( "section of Profile Builder's Documentation.", 'profile-builder' ) ) ), array('a' => array( 'href' => array() ) ) );
+                                            echo esc_html( apply_filters( 'upp_transition_notice_part_3', esc_html__( "section of Profile Builder's Documentation.", 'metronet-profile-picture' ) ) );
                                             ?>
                                         </p>
                                     </div>
@@ -108,22 +111,22 @@ if( !class_exists('PB_Handle_Transition') ){
                                     <div>
                                         <a href="<?php echo esc_url( add_query_arg( array( 'action' => 'pb_install_pb_plugin', 'nonce' => wp_create_nonce( 'pb_install_pb_plugin' ) ), get_dashboard_url( $current_user -> ID, "plugins.php" ) ) ); ?>"
                                            class="button-primary" style="margin-right: 20px">
-                                            <?php echo apply_filters( 'upp_transition_notice_button_text', esc_html__( 'Install & Activate', 'profile-builder' ) ); ?>
+                                            <?php echo esc_html( apply_filters( 'upp_transition_notice_button_text', esc_html__( 'Install & Activate', 'metronet-profile-picture' ) ) ); ?>
                                         </a>
                                     </div>
 
                                     <div>
-                                        <a href="<?php echo esc_url( add_query_arg(array($this->query_arg => $this->notificationId)) ) ?>"
+                                        <a href="<?php echo esc_url( add_query_arg(array($this->query_arg => $this->notificationId, '_wpnonce' => wp_create_nonce( $this->notificationId ))) ) ?>"
                                            style="height: 30px;" class="button-secondary">
-                                            <?php esc_html_e('Not now', 'profile-builder'); ?>
+                                            <?php esc_html_e('Not now', 'metronet-profile-picture'); ?>
                                         </a>
                                     </div>
                                 </div>
 
-                                <a href="<?php echo esc_url( add_query_arg(array($this->query_arg => $this->notificationId)) ) ?>"
+                                <a href="<?php echo esc_url( add_query_arg(array($this->query_arg => $this->notificationId, '_wpnonce' => wp_create_nonce( $this->notificationId ))) ) ?>"
                                    type="button" class="notice-dismiss" style="text-decoration: none;">
                                     <span class="screen-reader-text">
-                                        <?php esc_html_e('Dismiss this notice.', 'profile-builder'); ?>
+                                        <?php esc_html_e('Dismiss this notice.', 'metronet-profile-picture'); ?>
                                     </span>
                                 </a>
                             </div>
@@ -133,7 +136,7 @@ if( !class_exists('PB_Handle_Transition') ){
                                 ?>
                                 <div class="upp-transition-notice upp-notice notice notice-info is-dismissible">
                                     <p>
-                                        <?php echo apply_filters( 'upp_transition_notice_update_pb', esc_html__('The User Profile Picture functionality has been migrated into Profile Builder as an add-on. Please update the Profile Builder plugin to at least version 3.12.0 to make use of this new add-on.', 'profile-builder') ); ?>
+                                        <?php echo esc_html( apply_filters( 'upp_transition_notice_update_pb', esc_html__('The User Profile Picture functionality has been migrated into Profile Builder as an add-on. Please update the Profile Builder plugin to at least version 3.12.0 to make use of this new add-on.', 'metronet-profile-picture') ) ); ?>
                                     </p>
                                 </div>
                                 <?php
@@ -147,16 +150,16 @@ if( !class_exists('PB_Handle_Transition') ){
                                             </p>
                                             <p style="margin-top: 16px; font-size: 15px;">
                                                 <?php
-                                                printf( apply_filters( 'upp_transition_notice_enable_add_on_part_1', esc_html__( 'The User Profile Picture functionality has been migrated into Profile Builder as an add-on. Do you wish to enable this new add-on and deactivate the User Profile Picture plugin?', 'profile-builder' ) ) );
+                                                echo esc_html( apply_filters( 'upp_transition_notice_enable_add_on_part_1', esc_html__( 'The User Profile Picture functionality has been migrated into Profile Builder as an add-on. Do you wish to enable this new add-on and deactivate the User Profile Picture plugin?', 'metronet-profile-picture' ) ) );
                                                 ?>
                                             </p>
                                             <p style="margin-top: 16px; font-size: 15px;">
                                                 <?php
-                                                printf( apply_filters( 'upp_transition_notice_enable_add_on_part_2', esc_html__( 'This plugin will continue to function as it is now, but it will not receive further updates. You can read more about this transition in', 'profile-builder' ) ) );
+                                                echo esc_html( apply_filters( 'upp_transition_notice_enable_add_on_part_2', esc_html__( 'This plugin will continue to function as it is now, but it will not receive further updates. You can read more about this transition in', 'metronet-profile-picture' ) ) );
                                                 echo ' ';
-                                                echo '<a href="' . apply_filters( 'upp_transition_notice_enable_add_on_link_target', "https://www.cozmoslabs.com/docs/profile-builder/add-ons/user-profile-picture/" ) . '" target="_blank" rel="noopener noreferrer">' . apply_filters( 'upp_transition_notice_enable_add_on_link_text', esc_html__( 'this', 'profile-builder' ) ) . '</a>';
+                                                echo '<a href="' . esc_url( apply_filters( 'upp_transition_notice_enable_add_on_link_target', "https://www.cozmoslabs.com/docs/profile-builder/add-ons/user-profile-picture/" ) ) . '" target="_blank" rel="noopener noreferrer">' . esc_html( apply_filters( 'upp_transition_notice_enable_add_on_link_text', esc_html__( 'this', 'metronet-profile-picture' ) ) ) . '</a>';
                                                 echo ' ';
-                                                wp_kses( printf( apply_filters( 'upp_transition_notice_enable_add_on_part_3', esc_html__( "section of Profile Builder's Documentation.", 'profile-builder' ) ) ), array('a' => array( 'href' => array() ) ) );
+                                                echo esc_html( apply_filters( 'upp_transition_notice_enable_add_on_part_3', esc_html__( "section of Profile Builder's Documentation.", 'metronet-profile-picture' ) ) );
                                                 ?>
                                             </p>
                                         </div>
@@ -166,22 +169,22 @@ if( !class_exists('PB_Handle_Transition') ){
                                         <div>
                                             <a href="<?php echo esc_url( add_query_arg( array( 'action' => 'pb_install_pb_plugin', 'nonce' => wp_create_nonce( 'pb_install_pb_plugin' ) ), get_dashboard_url( $current_user -> ID, "plugins.php" ) ) ); ?>"
                                                class="button-primary" style="margin-right: 20px">
-                                                <?php echo apply_filters( 'upp_transition_notice_enable_add_on_button_text', esc_html__( 'Activate the add-on', 'profile-builder' ) ); ?>
+                                                <?php echo esc_html( apply_filters( 'upp_transition_notice_enable_add_on_button_text', esc_html__( 'Activate the add-on', 'metronet-profile-picture' ) ) ); ?>
                                             </a>
                                         </div>
 
                                         <div>
-                                            <a href="<?php echo esc_url( add_query_arg(array($this->query_arg => $this->notificationId)) ) ?>"
+                                            <a href="<?php echo esc_url( add_query_arg(array($this->query_arg => $this->notificationId, '_wpnonce' => wp_create_nonce( $this->notificationId ))) ) ?>"
                                                style="height: 30px;" class="button-secondary">
-                                                <?php esc_html_e('Not now', 'profile-builder'); ?>
+                                                <?php esc_html_e('Not now', 'metronet-profile-picture'); ?>
                                             </a>
                                         </div>
                                     </div>
 
-                                    <a href="<?php echo esc_url( add_query_arg(array($this->query_arg => $this->notificationId)) ) ?>"
+                                    <a href="<?php echo esc_url( add_query_arg(array($this->query_arg => $this->notificationId, '_wpnonce' => wp_create_nonce( $this->notificationId ))) ) ?>"
                                        type="button" class="notice-dismiss" style="text-decoration: none;">
                                     <span class="screen-reader-text">
-                                        <?php esc_html_e('Dismiss this notice.', 'profile-builder'); ?>
+                                        <?php esc_html_e('Dismiss this notice.', 'metronet-profile-picture'); ?>
                                     </span>
                                     </a>
                                 </div>
@@ -195,12 +198,17 @@ if( !class_exists('PB_Handle_Transition') ){
 
         // Function that saves the notification dismissal to the user meta
         public function dismiss_notification() {
+            if ( ! current_user_can( 'manage_options' ) ) {
+                return;
+            }
+
             global $current_user;
 
-            $user_id = $current_user->ID;
-
             // If user clicks to ignore the notice, add that to their user meta
-            if ( isset( $_GET[$this->query_arg] ) && $this->notificationId === $_GET[$this->query_arg] ) {
+            if ( isset( $_GET[ $this->query_arg ], $_GET['_wpnonce'] )
+                && $this->notificationId === $_GET[ $this->query_arg ]
+                && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), $this->notificationId )
+            ) {
                 do_action( $this->notificationId.'_before_notification_dismissed', $current_user );
                 update_option( 'upp_transition_notice_counter', 0 );
                 do_action( $this->notificationId.'_after_notification_dismissed', $current_user );
@@ -217,7 +225,7 @@ if( !class_exists('PB_Handle_Transition') ){
                 isset( $_REQUEST['action'] ) && !empty($_REQUEST['nonce']) && $_REQUEST['action'] === 'pb_install_pb_plugin' &&
                 !isset( $_REQUEST['upp_install_pb_plugin_success']) &&
                 current_user_can( 'manage_options' ) &&
-                wp_verify_nonce( sanitize_text_field( $_REQUEST['nonce'] ), 'pb_install_pb_plugin' )
+                wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['nonce'] ) ), 'pb_install_pb_plugin' )
             ) {
 
                 $plugin_slug = 'profile-builder/index.php';
